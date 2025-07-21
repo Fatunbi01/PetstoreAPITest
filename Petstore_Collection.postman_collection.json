@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "c9186cae-8dbb-4609-95e0-997db93cfbb2",
+		"name": "Petstore_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26143297",
+		"_collection_link": "https://personal-team-0023.postman.co/workspace/Gorest~f2be6af7-db41-4b68-91e0-737f103a80c3/collection/26143297-c9186cae-8dbb-4609-95e0-997db93cfbb2?action=share&source=collection_link&creator=26143297"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "CreateUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Positive Test Cases\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is within acceptable range\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response content type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected keys\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.have.all.keys(\"code\", \"type\", \"message\");\r",
+									"});\r",
+									"\r",
+									"// Negative Test Cases\r",
+									"pm.test(\"Response code should not be 400\", function () {\r",
+									"    pm.expect(pm.response.code).to.not.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should not contain unexpected keys\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.have.any.keys(\"error\", \"details\");\r",
+									"});\r",
+									"\r",
+									"// Edge Cases\r",
+									"pm.test(\"Response message is a string\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.be.a(\"string\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code is a number\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.code).to.be.a(\"number\");\r",
+									"});\r",
+									"\r",
+									"// Boundary Cases\r",
+									"pm.test(\"Response code is within valid range\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.code).to.be.within(100, 599);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response message length is greater than 0\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message.length).to.be.greaterThan(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"username\": \"Olumide001\",\r\n  \"firstName\": \"Olumide\",\r\n  \"lastName\": \"Fatunbi\",\r\n  \"email\": \"yfatunbi@gmail.com\",\r\n  \"password\": \"Olumide@001\",\r\n  \"phone\": \"09034221962\",\r\n  \"userStatus\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}user/",
+							"host": [
+								"{{BaseUrl}}user"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateWithList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"username\": \"Olumide001\",\r\n    \"firstName\": \"Olumide\",\r\n    \"lastName\": \"Fatunbi\",\r\n    \"email\": \"yfatunbi@gmail.com\",\r\n    \"password\": \"Olumide@001\",\r\n    \"phone\": \"09034221962\",\r\n    \"userStatus\": 1\r\n  },\r\n  {\r\n    \"id\": 1,\r\n    \"username\": \"Olumide002\",\r\n    \"firstName\": \"Olumide2\",\r\n    \"lastName\": \"Fatunbi2\",\r\n    \"email\": \"yfatunbi2@gmail.com\",\r\n    \"password\": \"Olumide@002\",\r\n    \"phone\": \"09034221961\",\r\n    \"userStatus\": 2\r\n  }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/createWithList",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"createWithList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserLogin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Olumide001\",\r\n  \"password\": \"Olumide@001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}user/login",
+							"host": [
+								"{{BaseUrl}}user"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserLogout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/logout",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://petstore.swagger.io/v2/user",
+			"type": "default"
+		}
+	]
+}

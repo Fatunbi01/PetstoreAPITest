@@ -1,0 +1,47 @@
+# This workflow runs Newman tests and generates an HTML report
+
+name: "Newman Tests"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install Node.js
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install Newman and HTML extra reporter
+      - name: Install Newman and HTML Reporter
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      # Create a directory for test results
+      - name: Create results directory
+        run: mkdir -p testResults
+
+      # Run Newman API Tests with HTML Extra Reporter
+      - name: Run API Tests
+        run: |
+          newman run Petstore_environment_variable.postman_collection.json \
+            -e Petstore.postman_environment.json \
+            -r htmlextra \
+            --reporter-htmlextra-export testResults/htmlreport.html
+
+      # Upload test results as an artifact
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: RunReports
+          path: testResults
+
