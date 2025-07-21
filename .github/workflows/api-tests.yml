@@ -33,7 +33,7 @@ jobs:
       # Run Newman API Tests with HTML Extra Reporter
       - name: Run API Tests
         run: |
-          newman run Petstore_environment_variable.postman_collection.json \
+          newman run Petstore_Collection.postman_collection.json \
             -e Petstore.postman_environment.json \
             -r htmlextra \
             --reporter-htmlextra-export testResults/htmlreport.html
